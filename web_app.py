@@ -45,8 +45,10 @@ img{width:100%;border-radius:8px}.ok{color:#087f5b}.fail{color:#c92a2a}
 <label>얼마나 오래된 영상까지 볼까요?</label>
 <select name="days" autocomplete="off"><option value="1" selected>최근 하루</option><option value="3">최근 3일</option>
 <option value="7">최근 7일</option></select>
-<details><summary>자세한 설정 보기</summary><label>찾을 말</label>
-<input class="text" name="keywords" value="{{ keywords }}"><label>뉴스 채널</label>
+<details><summary>자세한 설정 보기</summary><label>특정 주제만 찾을 때 쓰는 말</label>
+<input class="text" name="keywords" value="{{ keywords }}" placeholder="비워 두면 모든 주제를 찾습니다">
+<small>기본값은 공란입니다. 사회·사건·날씨·연예·국제·경제를 모두 찾습니다.</small>
+<label>뉴스 채널</label>
 <input class="text" name="source_channels" value="{{ channels }}"></details>
 <p><button>유튜브 이야기 찾기</button>
 <button name="sample_mode" value="1">예시 데이터로 연습하기</button></p></form></section>

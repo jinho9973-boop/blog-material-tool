@@ -53,7 +53,7 @@ def parser() -> argparse.ArgumentParser:
     command.add_argument(
         "--keywords", "--검색어", dest="keywords",
         default=",".join(DEFAULT_KEYWORDS),
-        help="유튜브에서 찾을 말(쉼표로 나눔)",
+        help="특정 주제만 찾을 때 쓰는 말(기본 공란: 모든 주제)",
     )
     command.add_argument(
         "--source-channels", "--뉴스채널", dest="source_channels",

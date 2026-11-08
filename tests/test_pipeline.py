@@ -9,7 +9,12 @@ from PIL import Image
 from content_tool.images import compose_images
 from content_tool.material import MaterialError, load_material
 from content_tool.writers import title_candidates, write_text_outputs, x_posts
-from content_tool.youtube import collect_top_issues, load_sample_issues, write_top_issues
+from content_tool.youtube import (
+    DEFAULT_KEYWORDS,
+    collect_top_issues,
+    load_sample_issues,
+    write_top_issues,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -137,6 +142,56 @@ def test_youtube_channel_ids_are_exact_and_cached(monkeypatch, tmp_path: Path) -
     assert youtube._resolve_channel_ids("key", ["KBS News"], cache) == result
 
 
+def test_empty_default_keywords_include_every_news_topic(monkeypatch) -> None:
+    import content_tool.youtube as youtube
+
+    assert DEFAULT_KEYWORDS == ()
+    monkeypatch.setattr(
+        youtube,
+        "_resolve_channel_ids",
+        lambda *_args: {"KBS News": "UC_EXACT"},
+    )
+
+    def fake_request(resource, _params, _api_key):
+        if resource == "channels":
+            return {
+                "items": [
+                    {
+                        "contentDetails": {
+                            "relatedPlaylists": {"uploads": "UU_EXACT"}
+                        }
+                    }
+                ]
+            }
+        assert resource == "playlistItems"
+        return {
+            "items": [
+                {
+                    "snippet": {"title": "전국에 많은 비와 태풍 소식"},
+                    "contentDetails": {
+                        "videoId": "weather",
+                        "videoPublishedAt": "2026-11-08T12:00:00Z",
+                    },
+                },
+                {
+                    "snippet": {"title": "인기 가수의 새 공연"},
+                    "contentDetails": {
+                        "videoId": "entertainment",
+                        "videoPublishedAt": "2026-11-08T11:00:00Z",
+                    },
+                },
+            ]
+        }
+
+    monkeypatch.setattr(youtube, "_request", fake_request)
+    ids = youtube._video_ids(
+        "key",
+        DEFAULT_KEYWORDS,
+        datetime(2026, 11, 8, 17, tzinfo=timezone.utc),
+    )
+    assert ids == {"weather", "entertainment"}
+
+
 def test_web_preview_copy_and_png_download(tmp_path: Path) -> None:
     from web_app import app
 
@@ -145,6 +200,8 @@ def test_web_preview_copy_and_png_download(tmp_path: Path) -> None:
     client = app.test_client()
     home = client.get("/")
     assert '<option value="1" selected>최근 하루</option>'.encode() in home.data
+    assert 'name="keywords" value=""'.encode() in home.data
+    assert "사회·사건·날씨·연예·국제·경제를 모두 찾습니다.".encode() in home.data
     response = client.post(
         "/run",
         data={

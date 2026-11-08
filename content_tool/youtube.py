@@ -13,7 +13,7 @@ from typing import Any
 import requests
 
 API_URL = "https://www.googleapis.com/youtube/v3"
-DEFAULT_KEYWORDS = ("경제", "주식", "연금", "환율", "부동산", "지원금")
+DEFAULT_KEYWORDS: tuple[str, ...] = ()
 DEFAULT_CHANNELS = ("KBS News", "SBS 뉴스", "MBCNEWS", "JTBC News", "연합뉴스TV")
 POLITICS_TERMS = (
     "정당", "대통령", "국회", "선거", "총선", "대선", "국회의원", "민주당",
