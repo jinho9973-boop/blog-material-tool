@@ -54,7 +54,7 @@ python run.py --youtube --out 오늘폴더
 기본 검색어는 `경제, 주식, 연금, 환율, 부동산, 지원금`입니다. 기본 출처는
 `KBS News, SBS 뉴스, MBCNEWS, JTBC News, 연합뉴스TV`입니다. 첫 실행에서는 채널명을
 YouTube에서 검색해 **이름이 정확히 같은 채널**의 ID를 `channels.json`에 저장합니다.
-다음 실행부터는 저장한 ID를 사용합니다. 각 채널의 uploads 재생목록에서 최근 7일
+다음 실행부터는 저장한 ID를 사용합니다. 각 채널의 uploads 재생목록에서 최근 하루
 영상을 가져와 검색어가 제목이나 설명에 포함된 영상만 추립니다.
 
 하루 평균 조회수로 정렬하고, 정치 키워드가 든 영상은 제외합니다. 제목 토큰의
@@ -63,6 +63,12 @@ Jaccard 유사도 또는 공통 핵심어 수로 비슷한 주제를 하나로 �
 
 ```bash
 python run.py --youtube --keywords 경제,연금,부동산 --out 오늘폴더
+```
+
+기본은 최근 하루입니다. 영상이 적은 날에만 기간을 늘릴 수 있습니다.
+
+```bash
+python run.py --youtube --days 7 --out 오늘폴더
 ```
 
 출처 채널도 명령줄에서 바꿀 수 있습니다.
@@ -89,12 +95,20 @@ python run.py --compose 오늘폴더
 
 ```json
 {
-  "success": true,
-  "files": ["오늘폴더/결과/blog1/본문.md"],
-  "blogs": [
-    {"blog": 1, "success": true, "files": ["오늘폴더/결과/blog1/본문.md"]}
+  "성공": true,
+  "파일목록": ["오늘폴더/결과/blog1/본문.md"],
+  "블로그결과": [
+    {"블로그": 1, "성공": true, "파일목록": ["오늘폴더/결과/blog1/본문.md"]}
   ]
 }
+```
+
+같은 명령을 한글로도 쓸 수 있습니다.
+
+```bash
+python run.py --유튜브 --기간 1 --저장폴더 오늘폴더
+python run.py --재료 오늘폴더 --블로그 1,2 --저장폴더 오늘폴더/결과
+python run.py --그림다시 오늘폴더
 ```
 
 ## 재료 파일

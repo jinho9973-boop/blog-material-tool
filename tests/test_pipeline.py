@@ -143,19 +143,40 @@ def test_web_preview_copy_and_png_download(tmp_path: Path) -> None:
     app.config.update(TESTING=True, LAST_OUTPUT=None, LAST_RESULT=None)
     output = tmp_path / "result"
     client = app.test_client()
+    home = client.get("/")
+    assert '<option value="1" selected>최근 하루</option>'.encode() in home.data
     response = client.post(
         "/run",
         data={
             "action": "material",
             "material": str(ROOT / "examples"),
             "out": str(output),
-            "blogs": "1",
-            "channels": "threads,x,instagram,clip",
+            "blogs": ["1"],
+            "channels": ["threads", "x", "instagram", "clip"],
         },
         follow_redirects=True,
     )
     assert response.status_code == 200
-    assert "본문 복사".encode() in response.data
+    assert "블로그 글 복사하기".encode() in response.data
     image_response = client.get("/download/blog1/썸네일.png")
     assert image_response.status_code == 200
     assert image_response.mimetype == "image/png"
+
+
+def test_korean_cli_alias_and_json(capsys, tmp_path: Path) -> None:
+    import run
+
+    exit_code = run.main(
+        [
+            "--그림다시",
+            str(ROOT / "examples"),
+            "--블로그",
+            "1",
+            "--저장폴더",
+            str(tmp_path / "result"),
+        ]
+    )
+    output = json.loads(capsys.readouterr().out)
+    assert exit_code == 0
+    assert output["성공"] is True
+    assert output["블로그결과"][0]["블로그"] == 1

@@ -22,28 +22,48 @@ from content_tool.youtube import (
 
 def parser() -> argparse.ArgumentParser:
     command = argparse.ArgumentParser(
-        description="네이버 블로그·SNS 콘텐츠 자동 정리 도구"
+        description="네이버 블로그와 SNS 글·그림을 만드는 도구"
     )
     modes = command.add_mutually_exclusive_group(required=True)
-    modes.add_argument("--youtube", action="store_true", help="유튜브 인기 이슈 수집")
-    modes.add_argument("--material", type=Path, help="blog1.json 등이 있는 폴더")
-    modes.add_argument("--compose", type=Path, help="이미지만 다시 만드는 재료 폴더")
-    command.add_argument("--out", type=Path, help="결과 폴더")
-    command.add_argument("--blogs", default="1,2", help="블로그 번호(예: 1,2)")
+    modes.add_argument(
+        "--youtube", "--유튜브", dest="youtube", action="store_true",
+        help="최근 유튜브 인기 이야기를 모읍니다",
+    )
+    modes.add_argument(
+        "--material", "--재료", dest="material", type=Path,
+        help="blog1.json과 blog2.json이 있는 폴더",
+    )
+    modes.add_argument(
+        "--compose", "--그림다시", dest="compose", type=Path,
+        help="글은 그대로 두고 그림만 다시 만듭니다",
+    )
     command.add_argument(
-        "--channels",
+        "--out", "--저장폴더", dest="out", type=Path, help="완성 파일을 넣을 폴더"
+    )
+    command.add_argument(
+        "--blogs", "--블로그", dest="blogs", default="1,2",
+        help="만들 블로그 번호(예: 1,2)",
+    )
+    command.add_argument(
+        "--channels", "--채널", dest="channels",
         default="threads,x,instagram,clip",
-        help="생성 채널(쉼표 구분)",
+        help="만들 SNS 종류(쉼표로 나눔)",
     )
     command.add_argument(
-        "--keywords",
+        "--keywords", "--검색어", dest="keywords",
         default=",".join(DEFAULT_KEYWORDS),
-        help="유튜브 검색 키워드(쉼표 구분)",
+        help="유튜브에서 찾을 말(쉼표로 나눔)",
     )
     command.add_argument(
-        "--source-channels",
+        "--source-channels", "--뉴스채널", dest="source_channels",
         default=",".join(DEFAULT_CHANNELS),
-        help="유튜브 원본 채널명(쉼표 구분)",
+        help="영상을 가져올 뉴스 채널(쉼표로 나눔)",
+    )
+    command.add_argument(
+        "--days", "--기간", dest="days",
+        type=int,
+        default=1,
+        help="며칠 전 영상까지 볼지 정합니다(기본: 1일)",
     )
     return command
 
@@ -54,10 +74,22 @@ def _csv(value: str) -> list[str]:
 
 def _result(success: bool, files: list[Path], **extra: object) -> dict[str, object]:
     return {
-        "success": success,
-        "files": [str(path) for path in files],
+        "성공": success,
+        "파일목록": [str(path) for path in files],
         **extra,
     }
+
+
+def _korean_blog_results(results: list[dict[str, object]]) -> list[dict[str, object]]:
+    translated: list[dict[str, object]] = []
+    for item in results:
+        value = {"블로그": item["blog"], "성공": item["success"]}
+        if item["success"]:
+            value["파일목록"] = item["files"]
+        else:
+            value["실패이유"] = item["reason"]
+        translated.append(value)
+    return translated
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -72,10 +104,11 @@ def main(argv: list[str] | None = None) -> int:
                 _csv(args.keywords),
                 channels=_csv(args.source_channels),
                 channel_cache=args.out / "channels.json",
+                days=args.days,
             )
             files = write_top_issues(issues, args.out)
             files.insert(0, args.out / "channels.json")
-            output = _result(True, files, count=len(issues))
+            output = _result(True, files, 수집개수=len(issues))
         else:
             material_dir = args.material or args.compose
             assert material_dir is not None
@@ -93,11 +126,15 @@ def main(argv: list[str] | None = None) -> int:
                 images_only=args.compose is not None,
             )
             success = all(bool(item["success"]) for item in blog_results)
-            output = _result(success, files, blogs=blog_results)
+            output = _result(
+                success,
+                files,
+                블로그결과=_korean_blog_results(blog_results),
+            )
     except Exception as exc:
-        output = _result(False, [], reason=str(exc))
+        output = _result(False, [], 실패이유=str(exc))
     print(json.dumps(output, ensure_ascii=False, indent=2))
-    return 0 if output["success"] else 1
+    return 0 if output["성공"] else 1
 
 
 if __name__ == "__main__":

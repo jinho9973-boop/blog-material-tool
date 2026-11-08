@@ -120,6 +120,7 @@ def _video_ids(
     now: datetime,
     channel_names: Iterable[str] = DEFAULT_CHANNELS,
     cache_path: Path | None = None,
+    days: int = 1,
 ) -> set[str]:
     channels = _resolve_channel_ids(api_key, channel_names, cache_path)
     details = _request(
@@ -135,7 +136,7 @@ def _video_ids(
         item.get("contentDetails", {}).get("relatedPlaylists", {}).get("uploads")
         for item in details.get("items", [])
     ]
-    cutoff = now - timedelta(days=7)
+    cutoff = now - timedelta(days=days)
     keyword_values = tuple(word.casefold() for word in keywords)
     ids: set[str] = set()
     for playlist_id in filter(None, playlists):
@@ -198,14 +199,19 @@ def collect_top_issues(
     *,
     channels: Iterable[str] = DEFAULT_CHANNELS,
     channel_cache: Path | None = None,
+    days: int = 1,
     limit: int = 10,
     now: datetime | None = None,
 ) -> list[dict[str, Any]]:
     """Collect and rank Korean videos, keeping one representative per topic."""
+    if days < 1:
+        raise YouTubeError("조회 기간은 1일 이상이어야 합니다.")
     if not api_key:
-        raise YouTubeError("YOUTUBE_API_KEY가 없습니다.")
+        raise YouTubeError(
+            "유튜브 API 키가 없습니다. .env 파일에 YOUTUBE_API_KEY를 넣어 주세요."
+        )
     now = now or datetime.now(timezone.utc)
-    ids = sorted(_video_ids(api_key, keywords, now, channels, channel_cache))
+    ids = sorted(_video_ids(api_key, keywords, now, channels, channel_cache, days))
     videos: list[dict[str, Any]] = []
     for batch in _chunks(ids):
         payload = _request(
