@@ -14,6 +14,7 @@ from content_tool.youtube import (
     DEFAULT_CHANNELS,
     DEFAULT_KEYWORDS,
     collect_top_issues,
+    load_sample_issues,
     write_top_issues,
 )
 
@@ -47,7 +48,8 @@ img{width:100%;border-radius:8px}.ok{color:#087f5b}.fail{color:#c92a2a}
 <details><summary>자세한 설정 보기</summary><label>찾을 말</label>
 <input class="text" name="keywords" value="{{ keywords }}"><label>뉴스 채널</label>
 <input class="text" name="source_channels" value="{{ channels }}"></details>
-<p><button>유튜브 이야기 찾기</button></p></form></section>
+<p><button>유튜브 이야기 찾기</button>
+<button name="sample_mode" value="1">예시 데이터로 연습하기</button></p></form></section>
 <section><h2>② 블로그와 SNS 완성하기</h2><form method="post" action="/run">
 <input type="hidden" name="action" value="material"><label>재료 파일이 있는 폴더</label>
 <input class="text" name="material" value="오늘폴더" required>
@@ -107,15 +109,22 @@ def run_pipeline():
     try:
         output = Path(request.form["out"]).expanduser().resolve()
         if request.form["action"] == "youtube":
-            issues = collect_top_issues(
-                os.getenv("YOUTUBE_API_KEY", ""),
-                _csv(request.form["keywords"]),
-                channels=_csv(request.form["source_channels"]),
-                channel_cache=output / "channels.json",
-                days=int(request.form.get("days", "1")),
-            )
+            sample_mode = request.form.get("sample_mode") == "1"
+            if sample_mode:
+                issues = load_sample_issues(
+                    Path(__file__).resolve().parent / "sample_youtube.json"
+                )
+            else:
+                issues = collect_top_issues(
+                    os.getenv("YOUTUBE_API_KEY", ""),
+                    _csv(request.form["keywords"]),
+                    channels=_csv(request.form["source_channels"]),
+                    channel_cache=output / "channels.json",
+                    days=int(request.form.get("days", "1")),
+                )
             files = write_top_issues(issues, output)
-            files.insert(0, output / "channels.json")
+            if not sample_mode:
+                files.insert(0, output / "channels.json")
             result = {"success": True, "files": [str(path) for path in files]}
         else:
             material = Path(request.form["material"]).expanduser().resolve()

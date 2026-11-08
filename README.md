@@ -77,6 +77,13 @@ python run.py --youtube --days 7 --out 오늘폴더
 python run.py --youtube --source-channels "KBS News,SBS 뉴스" --out 오늘폴더
 ```
 
+API 키가 없는 컴퓨터에서는 함께 들어 있는 가짜 영상 자료로 전체 흐름을 시험합니다.
+정치 영상 제외, 비슷한 주제 묶기, 순위 계산과 두 결과 파일 저장이 모두 실행됩니다.
+
+```bash
+python run.py --유튜브 --유튜브예시 sample_youtube.json --저장폴더 오늘폴더
+```
+
 블로그와 채널별 결과를 만듭니다.
 
 ```bash
@@ -154,7 +161,8 @@ python run.py --그림다시 오늘폴더
 - 값이 없거나 형식이 잘못되면 사실이나 숫자를 보충하지 않고 해당 블로그를 실패로
   표시합니다.
 
-전체 예시는 [`examples/blog1.json`](examples/blog1.json)에 있습니다.
+서로 다른 주제의 전체 예시는 [`examples/blog1.json`](examples/blog1.json)과
+[`examples/blog2.json`](examples/blog2.json)에 있습니다.
 
 ## 배경 이미지
 
@@ -207,6 +215,7 @@ python web_app.py
 
 브라우저에서 <http://127.0.0.1:5000>을 엽니다. YouTube 수집, 전체 결과 생성,
 이미지 재생성 버튼과 본문 미리보기·복사, PNG 미리보기·다운로드를 제공합니다.
+API 키 없이 시험하려면 `예시 데이터로 연습하기` 버튼을 누릅니다.
 외부에 공개하는 서버가 아니라 같은 컴퓨터에서 쓰는 로컬 도구입니다.
 
 ## 테스트

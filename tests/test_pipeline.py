@@ -9,7 +9,7 @@ from PIL import Image
 from content_tool.images import compose_images
 from content_tool.material import MaterialError, load_material
 from content_tool.writers import title_candidates, write_text_outputs, x_posts
-from content_tool.youtube import collect_top_issues, write_top_issues
+from content_tool.youtube import collect_top_issues, load_sample_issues, write_top_issues
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -151,13 +151,15 @@ def test_web_preview_copy_and_png_download(tmp_path: Path) -> None:
             "action": "material",
             "material": str(ROOT / "examples"),
             "out": str(output),
-            "blogs": ["1"],
+            "blogs": ["1", "2"],
             "channels": ["threads", "x", "instagram", "clip"],
         },
         follow_redirects=True,
     )
     assert response.status_code == 200
     assert "블로그 글 복사하기".encode() in response.data
+    assert (output / "blog2" / "본문.md").is_file()
+    assert (output / "blog2" / "clip" / "대본.txt").is_file()
     image_response = client.get("/download/blog1/썸네일.png")
     assert image_response.status_code == 200
     assert image_response.mimetype == "image/png"
@@ -180,3 +182,34 @@ def test_korean_cli_alias_and_json(capsys, tmp_path: Path) -> None:
     assert exit_code == 0
     assert output["성공"] is True
     assert output["블로그결과"][0]["블로그"] == 1
+
+
+def test_sample_youtube_runs_without_api_key(capsys, tmp_path: Path, monkeypatch) -> None:
+    import run
+
+    monkeypatch.delenv("YOUTUBE_API_KEY", raising=False)
+    sample = ROOT / "sample_youtube.json"
+    issues = load_sample_issues(
+        sample,
+        now=datetime(2026, 11, 8, 17, tzinfo=timezone.utc),
+    )
+    assert len(issues) == 10
+    assert issues[0]["묶인영상수"] == 2
+    assert all("대통령" not in item["제목"] for item in issues)
+
+    output_dir = tmp_path / "youtube"
+    exit_code = run.main(
+        [
+            "--유튜브",
+            "--유튜브예시",
+            str(sample),
+            "--저장폴더",
+            str(output_dir),
+        ]
+    )
+    result = json.loads(capsys.readouterr().out)
+    assert exit_code == 0
+    assert result["성공"] is True
+    assert result["수집개수"] == 10
+    assert (output_dir / "youtube_top10.json").is_file()
+    assert (output_dir / "youtube_top10.md").is_file()

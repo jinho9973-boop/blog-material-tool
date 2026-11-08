@@ -22,7 +22,9 @@ POLITICS_TERMS = (
 STOPWORDS = {
     "영상", "오늘", "이번", "대한", "관련", "이유", "진짜", "뉴스", "속보",
     "공개", "정리", "알아보기", "그리고", "하지만", "에서", "으로", "하는",
-    "하면", "입니다", "있습니다", "없습니다",
+    "하면", "입니다", "있습니다", "없습니다", "전에", "확인", "확인할",
+    "확인하기", "내용", "조건", "쉽게", "핵심", "분석", "보기", "한눈에",
+    "살펴볼", "살펴보기",
 }
 
 
@@ -193,6 +195,26 @@ def _duration_days(published_at: datetime, now: datetime) -> float:
     return max((now - published_at).total_seconds() / 86_400, 1 / 24)
 
 
+def _select_topics(videos: list[dict[str, Any]], limit: int) -> list[dict[str, Any]]:
+    videos.sort(key=lambda video: video["일평균조회수"], reverse=True)
+    selected: list[dict[str, Any]] = []
+    for video in videos:
+        group = next((previous for previous in selected if _similar(video, previous)), None)
+        if group is not None:
+            group["_related"].append({"제목": video["제목"], "주소": video["주소"]})
+            continue
+        if len(selected) < limit:
+            video["_related"] = []
+            selected.append(video)
+    for rank, video in enumerate(selected, 1):
+        video.pop("_tokens", None)
+        related = video.pop("_related")
+        video["묶인영상수"] = 1 + len(related)
+        video["관련영상"] = related
+        video["순위"] = rank
+    return selected
+
+
 def collect_top_issues(
     api_key: str,
     keywords: Iterable[str] = DEFAULT_KEYWORDS,
@@ -248,23 +270,54 @@ def collect_top_issues(
                     "_tokens": sorted(_tokens(title)),
                 }
             )
-    videos.sort(key=lambda video: video["일평균조회수"], reverse=True)
-    selected: list[dict[str, Any]] = []
-    for video in videos:
-        group = next((previous for previous in selected if _similar(video, previous)), None)
-        if group is not None:
-            group["_related"].append({"제목": video["제목"], "주소": video["주소"]})
+    return _select_topics(videos, limit)
+
+
+def load_sample_issues(
+    path: Path,
+    *,
+    limit: int = 10,
+    now: datetime | None = None,
+) -> list[dict[str, Any]]:
+    """Load fake video candidates and run the same ranking/grouping rules offline."""
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise YouTubeError(f"유튜브 예시 파일이 없습니다: {path}") from exc
+    except json.JSONDecodeError as exc:
+        raise YouTubeError(f"유튜브 예시 JSON 형식 오류({exc.lineno}행)") from exc
+    if not isinstance(raw, list):
+        raise YouTubeError("유튜브 예시 파일의 맨 바깥은 목록이어야 합니다.")
+    now = now or datetime.now(timezone.utc)
+    videos: list[dict[str, Any]] = []
+    required = ("제목", "채널명", "조회수", "올린날짜", "주소")
+    for index, item in enumerate(raw, 1):
+        if not isinstance(item, dict) or any(field not in item for field in required):
+            raise YouTubeError(f"유튜브 예시 {index}번 영상의 필수 값이 부족합니다.")
+        title = str(item["제목"]).strip()
+        searchable = f"{title} {item.get('설명', '')}".lower()
+        if any(term.lower() in searchable for term in POLITICS_TERMS):
             continue
-        if len(selected) < limit:
-            video["_related"] = []
-            selected.append(video)
-    for rank, video in enumerate(selected, 1):
-        video.pop("_tokens", None)
-        related = video.pop("_related")
-        video["묶인영상수"] = 1 + len(related)
-        video["관련영상"] = related
-        video["순위"] = rank
-    return selected
+        try:
+            published = _parse_time(str(item["올린날짜"]))
+            views = int(item["조회수"])
+            likes = item.get("좋아요수")
+            likes = int(likes) if likes is not None else None
+        except (TypeError, ValueError) as exc:
+            raise YouTubeError(f"유튜브 예시 {index}번 영상의 숫자나 날짜가 잘못되었습니다.") from exc
+        videos.append(
+            {
+                "제목": title,
+                "채널명": str(item["채널명"]),
+                "조회수": views,
+                "좋아요수": likes,
+                "올린날짜": str(item["올린날짜"]),
+                "주소": str(item["주소"]),
+                "일평균조회수": math.floor(views / _duration_days(published, now)),
+                "_tokens": sorted(_tokens(title)),
+            }
+        )
+    return _select_topics(videos, limit)
 
 
 def write_top_issues(issues: list[dict[str, Any]], output_dir: Path) -> list[Path]:

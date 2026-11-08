@@ -16,6 +16,7 @@ from content_tool.youtube import (
     DEFAULT_CHANNELS,
     DEFAULT_KEYWORDS,
     collect_top_issues,
+    load_sample_issues,
     write_top_issues,
 )
 
@@ -65,6 +66,11 @@ def parser() -> argparse.ArgumentParser:
         default=1,
         help="며칠 전 영상까지 볼지 정합니다(기본: 1일)",
     )
+    command.add_argument(
+        "--sample-youtube", "--유튜브예시", dest="sample_youtube",
+        type=Path,
+        help="API 키 대신 사용할 유튜브 예시 JSON 파일",
+    )
     return command
 
 
@@ -99,15 +105,19 @@ def main(argv: list[str] | None = None) -> int:
         if args.youtube:
             if args.out is None:
                 raise ValueError("--youtube에는 --out이 필요합니다.")
-            issues = collect_top_issues(
-                os.getenv("YOUTUBE_API_KEY", ""),
-                _csv(args.keywords),
-                channels=_csv(args.source_channels),
-                channel_cache=args.out / "channels.json",
-                days=args.days,
-            )
+            if args.sample_youtube:
+                issues = load_sample_issues(args.sample_youtube)
+            else:
+                issues = collect_top_issues(
+                    os.getenv("YOUTUBE_API_KEY", ""),
+                    _csv(args.keywords),
+                    channels=_csv(args.source_channels),
+                    channel_cache=args.out / "channels.json",
+                    days=args.days,
+                )
             files = write_top_issues(issues, args.out)
-            files.insert(0, args.out / "channels.json")
+            if not args.sample_youtube:
+                files.insert(0, args.out / "channels.json")
             output = _result(True, files, 수집개수=len(issues))
         else:
             material_dir = args.material or args.compose
