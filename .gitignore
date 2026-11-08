@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+결과/
+오늘폴더/
+youtube_top10.json
+youtube_top10.md
+channels.json
