@@ -1,35 +1,29 @@
 {
   "제목": "벽 너머, 오후 세 시",
-  "부제": "1401호의 여자",
-  "장르": "성인 심리·일상 드라마 (네토리 / 장편)",
-  "공통화풍프롬프트": "Cinematic Korean atmospheric drama film still, moody natural chiaroscuro lighting, 35mm anamorphic lens, shallow depth of field, realistic skin texture, subtle film grain, photorealistic, no text, no letters, no watermark, no logo",
+  "부제": "1401호의 정숙한 아내와 1402호의 이방인",
+  "장르": "성인 농밀 치정·네토리 장편 (하드 텐션)",
+  "공통화풍프롬프트": "Raw photorealistic 35mm neo-noir adult drama film still, humid skin sheen, deep shadow and warm amber rim light, shallow depth of field, Kodak Vision3 500T film grain, natural skin pores, no text, no letters, no watermark, no logo",
   "등장인물": {
     "서연": {
       "이름": "윤서연",
       "별칭": ["서연", "1401호", "그녀", "아내"],
       "역할": "1401호 결혼 6년 차 전업주부 (35세, 전직 문학 출판 편집자)",
-      "설명": "늘 목까지 여민 헐렁한 카디건과 긴 스커트로 몸을 감추고 다니는 단정하고 예의 바른 옆집 유부녀. 무심한 남편 곁에서 역할극처럼 살아가던 중, 소나기 내리던 날 감춰져 있던 굴곡진 실루엣을 태주에게 들킨 뒤 평일 오후의 일상이 조금씩 잠식당한다.",
-      "외형프롬프트": "elegant 35-year-old Korean married woman, porcelain skin, soft melancholic almond eyes, dark brown hair tied in a neat low bun with a few loose strands, understated refined beauty, surprisingly curvaceous hourglass figure usually hidden beneath modest loose cardigan and long skirt"
+      "설명": "하얀 피부에 늘 단정한 옷으로 몸을 감추고 살던 정숙한 한국인 유부녀. 마르고 단아한 얼굴과 달리 옷 아래에는 풍만한 가슴과 잘록한 허리, 묵직한 골반 라인이 숨겨져 있다. 옆집으로 이사 온 거칠고 위압적인 50대 금발 백인 남자 빅터의 노골적인 시선과 시가 연기에 압도당하며 조금씩 무너진다.",
+      "외형프롬프트": "stunning 35-year-old Korean married woman, pale porcelain skin with subtle humid sheen, delicate submissive almond eyes, dark hair loosely pinned in a low bun with damp tendrils on her neck, thin silver wedding band on left ring finger, contrastingly voluptuous full-busted hourglass figure, tiny waist and wide feminine hips"
     },
-    "태주": {
-      "이름": "강태주",
-      "별칭": ["태주", "1402호"],
-      "역할": "1402호 주인공 (32세, 프리랜서 공간·조명 디자이너)",
-      "설명": "복도 끝 옆집으로 이사 온 남주인공. 재택 작업이 많아 평일 낮에 집에 머문다. 처음엔 서연을 단정한 이웃으로만 여겼으나, 비에 젖은 그녀의 몸매를 코앞에서 목격한 순간 강렬한 욕정을 품고 치밀하고 여유롭게 그녀의 일상을 파고든다.",
-      "외형프롬프트": "handsome 32-year-old Korean man, 184cm tall lean athletic build, calm observant deep eyes, clean-cut dark hair, wearing minimalist charcoal shirt or casual tailored jacket"
+    "빅터": {
+      "이름": "빅터 콜 (Victor Cole)",
+      "별칭": ["빅터", "그 남자", "1402호", "태주"],
+      "역할": "1402호 주인공 (52세, 은퇴한 해외 보안·건설 브로커 출신 자산가)",
+      "설명": "복도 끝 1402호 펜트 라인으로 이사 온 50대 초반의 거친 백인 남자. 190cm에 육박하는 우람하고 단단한 근육질 체격, 뒤로 거칠게 넘긴 매우 노란 블리치 금발 머리, 험상궂고 불량한 양아치상 인상, 굵은 팔뚝의 흉터와 문신, 입에 늘 물고 있는 굵은 시가와 자욱한 연기가 트레이드마크다. 예의 차리는 척조차 하지 않고 노골적인 수컷의 눈빛으로 옆집 유부녀 서연을 위압하고 잠식한다.",
+      "외형프롬프트": "rugged 52-year-old Caucasian alpha man, 190cm massive muscular build with broad thick chest and veined forearms, bright bleached yellow-blonde hair slicked back messily, rough intimidating bad-boy thug face with weathered scars, heavy stubble and sharp predatory smirk, smoking a thick lit Cuban cigar with curling smoke, unbuttoned black shirt revealing muscular chest and faded tattoos"
     },
     "정우": {
       "이름": "박정우",
       "별칭": ["정우", "남편", "박 팀장"],
       "역할": "1401호 남편 (38세, 대기업 전략기획팀장)",
-      "설명": "사회적으로는 젠틀하고 능력 있는 남편이지만, 집 안의 아내는 공기나 가구처럼 당연하게 방치하는 워커홀릭. 중반 이후 오히려 태주에게 호감을 보이며 주말 식사에 초대해 아슬아슬한 삼각 긴장감을 만든다.",
-      "외형프롬프트": "38-year-old Korean corporate manager man, neat glasses, navy tailored suit and tie, polite but emotionally distant expression"
+      "설명": "마르고 깔끔한 안경잡이 엘리트 직장인. 집에서는 아내의 몸에 손끝 하나 대지 않는 무심한 남편으로, 덩치 크고 거친 옆집 남자 빅터 앞에서는 본능적으로 위축된다.",
+      "외형프롬프트": "slim 38-year-old Korean office manager man, thin wire glasses, neat business suit, tired polite demeanor"
     }
-  },
-  "장편로드맵": {
-    "1막_1~25화": "관찰과 점화 — 철벽 같던 이웃, 소나기에 드러난 반전 실루엣과 욕정의 시작, 작은 비밀의 공유",
-    "2막_26~55화": "평일 오후 세 시 — 조명·인테리어 자문을 명분으로 한 오후의 차 한 잔, 흔들리는 방어벽과 첫 경계선 돌파",
-    "3막_56~85화": "식탁 위의 삼각구도 — 남편 정우의 호감과 주말 저녁 초대, 거실과 주방 사이를 오가는 시선과 주도권의 완전한 역전",
-    "4막_86~100화": "균열과 잠식 — 남편의 뒤늦은 위화감, 발각 위기 돌파, 그녀의 일상과 마음이 완전히 1402호로 기우는 결말"
   }
 }

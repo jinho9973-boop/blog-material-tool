@@ -20,8 +20,8 @@ def test_wall_3pm_series_bible_and_episodes_load() -> None:
     bible = load_series_bible(NOVEL_DIR)
     assert bible.title == "벽 너머, 오후 세 시"
     assert "서연" in bible.characters
-    assert "태주" in bible.characters
-    for ep_num in range(1, 6):
+    assert "빅터" in bible.characters
+    for ep_num in range(1, 7):
         ep = load_episode(NOVEL_DIR / f"ep0{ep_num}.json", bible)
         assert ep.number == ep_num
         assert len(ep.paragraphs) >= 10
