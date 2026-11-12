@@ -1,0 +1,69 @@
+{
+  "회차": 2,
+  "제목": "기념일의 식은 와인",
+  "요약": "금요일 저녁, 평소와 달리 설레는 표정으로 와인과 꽃을 안고 귀가하던 서연. 하지만 자정이 넘도록 남편은 돌아오지 않고, 새벽 분리수거장에서 두 사람이 마주친다.",
+  "태그": ["권태", "결혼기념일", "옆집남자", "심리묘사", "벽너머오후세시"],
+  "본문": [
+    "이사 온 지 열흘쯤 지난 금요일 저녁이었다. 미팅을 마치고 지하주차장에서 올라오는 엘리베이터 안에서 나는 두 번째로 윤서연과 마주쳤다.",
+    "그날의 그녀는 첫날과 미묘하게 달랐다. 여전히 단정한 연회색 트렌치풍 원피스 차림이었지만, 늘 팽팽하게 당겨 묶던 머리카락을 반쯤 내려 부드럽게 말아 두었고 입술에도 은은한 장미빛이 돌았다. 두 팔에 안은 종이 장바구니 위로 와인 병목과 하얀 프리지아 꽃다발 끝이 삐죽 올라와 있었다.",
+    "“오늘 좋은 일 있으신가 봐요.”",
+    "빈말처럼 건넨 인사에 그녀가 조금 멋쩍은 듯 뺨을 붉히며 웃었다. 옆모습에 어리는 옅은 보조개를 본 건 그때가 처음이었다.",
+    "“네, 그냥… 집에서 조용히 저녁 먹기로 해서요.”",
+    "14층에 도착해 도어락을 누르는 그녀의 손끝이 경쾌했다. 현관문이 닫히기 전 새어 나온 버터와 로즈마리 향이 복도 끝까지 은은하게 번졌다. 나는 괜히 피식 웃으며 1402호 문을 열고 들어와 작업실 조명을 켰다. 화목한 집이구나, 딱 그 정도의 감상이었다.",
+    "하지만 밤 아홉 시가 지나고, 열 시가 넘어가도록 복도에서는 엘리베이터가 멈추는 소리가 들리지 않았다.",
+    "열한 시쯤 커피를 내리러 주방에 나왔을 때, 베란다 창 너머로 짧게 울리는 그녀의 전화 목소리가 들렸다. 평소보다 애써 밝게 끌어올린 톤이었다. ‘응, 여보. 아직 회사야? 아니, 천천히 와. 식으면 다시 데우면 돼.’ 그리고 수화기 너머의 말에 대꾸도 못 한 채 먼저 끊어지는 통화 종료음.",
+    "그날 밤 1401호의 도어락은 끝내 울리지 않았다.",
+    "새벽 한 시 반, 마감 도면을 메일로 넘기고 재활용 쓰레기를 버리러 내려갔을 때였다. 가로등 불빛만 희미하게 떨어지는 단지 뒤편 분리수거장 앞에 익숙한 연회색 원피스 자락이 서 있었다. 윤서연이었다.",
+    "그녀의 손에는 아까 엘리베이터에서 보았던 하얀 프리지아 다발과, 개봉조차 하지 않은 식재료 포장 상자가 들려 있었다. 인기척에 놀라 고개를 돌린 그녀의 눈가가 서늘한 밤공기 속에서 붉게 물들어 있었다. 저녁에 발랐던 입술 색은 이미 입술을 깨문 흔적과 함께 지워진 뒤였다.",
+    "“아… 안 주무셨네요.”",
+    "그녀는 황급히 꽃다발이 든 종이봉투를 등 뒤로 숨기려다 실패하고는 어색하게 시선을 떨구었다. 완벽하게 다림질된 것 같던 여자의 일상에 선명한 구김이 잡히는 순간이었다. 나는 그녀의 손에 들린 봉투를 굳이 쳐다보지 않은 채, 내가 들고 온 빈 상자만 수거함에 넣고 한 걸음 비켜섰다.",
+    "“밤공기가 좀 차네요. 먼저 들어가세요, 서연 씨.”",
+    "처음으로 호수 대신 이름을 불렀다. 그녀의 속눈썹이 아주 미세하게 파르르 떨렸다가 이내 고개를 끄덕였다. 앞서 걸어가는 그녀의 가느다란 뒷목과 내려앉은 어깨선을 바라보며, 나는 처음으로 이상한 호기심을 느꼈다. 저토록 정성껏 차려 놓고도 아무도 오지 않는 식탁 앞에서, 이 여자는 대체 무슨 얼굴을 하고 앉아 있었을까."
+  ],
+  "장면": [
+    {
+      "제목": "엘리베이터 안의 꽃과 와인",
+      "나레이션": "금요일 저녁 엘리베이터 안. 장바구니 위로 와인 병목과 하얀 프리지아 꽃다발이 올라와 있었다.",
+      "자막": "기념일 저녁, 처음 본 그녀의 옅은 미소와 장미빛 입술.",
+      "분위기": "corridor",
+      "등장인물": ["서연", "태주"],
+      "이미지프롬프트": "inside a modern apartment elevator mirror reflection, Korean married woman in modest light grey dress holding grocery bag with wine bottle and white freesia flowers, shy subtle smile, man standing beside her",
+      "영상프롬프트": "Gentle elevator interior shot, warm ceiling light reflecting on brass wall, she smiles shyly holding flowers.",
+      "카메라": "zoom_in",
+      "길이초": 4.5
+    },
+    {
+      "제목": "울리지 않는 도어락",
+      "나레이션": "식으면 다시 데우면 된다던 그녀의 애써 밝은 통화 소리 뒤로, 그날 밤 1401호의 도어락은 끝내 울리지 않았다.",
+      "자막": "자정이 넘도록 돌아오지 않는 남편, 식어 버린 식탁.",
+      "분위기": "night",
+      "등장인물": ["서연"],
+      "이미지프롬프트": "dimly lit dining table for two with untouched wine glasses and extinguished candle in a modern apartment at midnight, lonely woman looking at her silent phone from behind",
+      "영상프롬프트": "Slow camera pull-out from untouched wine glasses and cooling dinner plate in dark blue midnight room.",
+      "카메라": "zoom_out",
+      "길이초": 5.0
+    },
+    {
+      "제목": "새벽 한 시 반의 분리수거장",
+      "나레이션": "가로등 불빛 아래, 아까 본 하얀 꽃다발을 들고 서 있는 그녀의 눈가가 붉게 젖어 있었다.",
+      "자막": "새벽 한 시 반, 버려지는 꽃다발 앞에서 마주친 두 사람.",
+      "분위기": "night",
+      "등장인물": ["서연", "태주"],
+      "이미지프롬프트": "quiet apartment courtyard under warm streetlight at 1:30 AM, Korean woman in light grey dress holding wilted white flowers with slightly reddened eyes, tall man noticing her quietly from a few steps away",
+      "영상프롬프트": "Slow push-in under lonely amber streetlight, she hides the paper bag slightly behind her back and lowers her trembling eyelashes.",
+      "카메라": "pan_up",
+      "길이초": 5.0
+    },
+    {
+      "제목": "처음 부른 이름",
+      "나레이션": "밤공기가 좀 차네요. 먼저 들어가세요, 서연 씨. 처음으로 호수 대신 이름을 불렀다.",
+      "자막": "“먼저 들어가세요, 서연 씨.” 처음 부른 이름에 떨리던 속눈썹.",
+      "분위기": "tension",
+      "등장인물": ["서연", "태주"],
+      "이미지프롬프트": "close medium shot at night apartment entrance, Korean woman pausing mid-step looking back slightly over her slender shoulder, subtle emotional crack in her composed expression",
+      "영상프롬프트": "Subtle slow-motion pause as she hears her name, soft night wind stirring loose hair strands along her neck.",
+      "카메라": "zoom_in",
+      "길이초": 4.5
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "제목": "벽 너머, 오후 세 시",
+  "부제": "1401호의 여자",
+  "장르": "성인 심리·일상 드라마 (네토리 / 장편)",
+  "공통화풍프롬프트": "Cinematic Korean atmospheric drama film still, moody natural chiaroscuro lighting, 35mm anamorphic lens, shallow depth of field, realistic skin texture, subtle film grain, photorealistic, no text, no letters, no watermark, no logo",
+  "등장인물": {
+    "서연": {
+      "이름": "윤서연",
+      "별칭": ["서연", "1401호", "그녀", "아내"],
+      "역할": "1401호 결혼 6년 차 전업주부 (35세, 전직 문학 출판 편집자)",
+      "설명": "늘 목까지 여민 헐렁한 카디건과 긴 스커트로 몸을 감추고 다니는 단정하고 예의 바른 옆집 유부녀. 무심한 남편 곁에서 역할극처럼 살아가던 중, 소나기 내리던 날 감춰져 있던 굴곡진 실루엣을 태주에게 들킨 뒤 평일 오후의 일상이 조금씩 잠식당한다.",
+      "외형프롬프트": "elegant 35-year-old Korean married woman, porcelain skin, soft melancholic almond eyes, dark brown hair tied in a neat low bun with a few loose strands, understated refined beauty, surprisingly curvaceous hourglass figure usually hidden beneath modest loose cardigan and long skirt"
+    },
+    "태주": {
+      "이름": "강태주",
+      "별칭": ["태주", "1402호"],
+      "역할": "1402호 주인공 (32세, 프리랜서 공간·조명 디자이너)",
+      "설명": "복도 끝 옆집으로 이사 온 남주인공. 재택 작업이 많아 평일 낮에 집에 머문다. 처음엔 서연을 단정한 이웃으로만 여겼으나, 비에 젖은 그녀의 몸매를 코앞에서 목격한 순간 강렬한 욕정을 품고 치밀하고 여유롭게 그녀의 일상을 파고든다.",
+      "외형프롬프트": "handsome 32-year-old Korean man, 184cm tall lean athletic build, calm observant deep eyes, clean-cut dark hair, wearing minimalist charcoal shirt or casual tailored jacket"
+    },
+    "정우": {
+      "이름": "박정우",
+      "별칭": ["정우", "남편", "박 팀장"],
+      "역할": "1401호 남편 (38세, 대기업 전략기획팀장)",
+      "설명": "사회적으로는 젠틀하고 능력 있는 남편이지만, 집 안의 아내는 공기나 가구처럼 당연하게 방치하는 워커홀릭. 중반 이후 오히려 태주에게 호감을 보이며 주말 식사에 초대해 아슬아슬한 삼각 긴장감을 만든다.",
+      "외형프롬프트": "38-year-old Korean corporate manager man, neat glasses, navy tailored suit and tie, polite but emotionally distant expression"
+    }
+  },
+  "장편로드맵": {
+    "1막_1~25화": "관찰과 점화 — 철벽 같던 이웃, 소나기에 드러난 반전 실루엣과 욕정의 시작, 작은 비밀의 공유",
+    "2막_26~55화": "평일 오후 세 시 — 조명·인테리어 자문을 명분으로 한 오후의 차 한 잔, 흔들리는 방어벽과 첫 경계선 돌파",
+    "3막_56~85화": "식탁 위의 삼각구도 — 남편 정우의 호감과 주말 저녁 초대, 거실과 주방 사이를 오가는 시선과 주도권의 완전한 역전",
+    "4막_86~100화": "균열과 잠식 — 남편의 뒤늦은 위화감, 발각 위기 돌파, 그녀의 일상과 마음이 완전히 1402호로 기우는 결말"
+  }
+}
