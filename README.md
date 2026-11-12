@@ -16,7 +16,7 @@ content_tool/
   novel.py        장편 소설 원고 → 장면 이미지·AI 프롬프트·자막·MP4 영상 변환
 fonts/            나눔고딕과 OFL 라이선스
 examples/         블로그 재료 예시
-novels/wall_3pm/  장편 소설 《벽 너머, 오후 세 시》 설정집 및 1~5화 원고·장면 콘티
+novels/penthouse_ntr/ 장편 소설 《스위트룸 3801호의 신부》 설정집 및 1~3화 원고·콘티
 tests/            단위·통합 테스트
 run.py            명령줄 프로그램
 web_app.py        로컬 웹 미리보기 및 소설 영상 제작 도구
@@ -213,20 +213,20 @@ bg_blog1_insta1.png ... bg_blog1_insta6.png
 
 ## 장편 소설 → 장면 이미지 → MP4 영상 전환
 
-`novels/wall_3pm/`에 장편 소설 **《벽 너머, 오후 세 시》** 설정집(`series_bible.json`, `설정집_및_장편플롯.md`)과 초반 1~5화 원고(`ep01.json` ~ `ep05.json`)가 들어 있습니다. 회차별로 소설 원고, 캐릭터 외형이 고정된 AI 이미지 생성 프롬프트, 이미지→영상(I2V) 모션 프롬프트, SRT 자막, 장면 PNG 카드, 카메라 무빙(`zoom`/`pan`·페이드)이 적용된 `영상.mp4`까지 한 번에 생성합니다 (`ffmpeg` 필요).
+`novels/penthouse_ntr/`에 소설 **《스위트룸 3801호의 신부》** 설정집(`series_bible.json`, `설정집_및_장편플롯.md`)과 초반 1~3화 원고(`ep01.json` ~ `ep03.json`)가 들어 있습니다. 회차별로 소설 원고, 캐릭터 외형이 고정된 AI 이미지 생성 프롬프트, 이미지→영상(I2V) 모션 프롬프트, SRT 자막, 장면 PNG 카드, 카메라 무빙(`zoom`/`pan`·페이드)이 적용된 `영상.mp4`까지 한 번에 생성합니다 (`ffmpeg` 필요).
 
 ```bash
-# 특정 회차(예: 3화) 이미지 + MP4 세로 영상(9:16) 생성
-python run.py --소설 novels/wall_3pm --회차 3 --비율 9:16 --저장폴더 결과/소설영상
+# 특정 회차(예: 1화) 이미지 + MP4 세로 영상(9:16) 생성
+python run.py --소설 novels/penthouse_ntr --회차 1 --비율 9:16 --저장폴더 결과/소설영상
 
-# 1~5화 전체 변환 (16:9 가로형)
-python run.py --소설 novels/wall_3pm --비율 16:9 --저장폴더 결과/소설영상
+# 전체 회차 변환 (16:9 가로형)
+python run.py --소설 novels/penthouse_ntr --비율 16:9 --저장폴더 결과/소설영상
 ```
 
-- **새 회차 집필**: `novels/wall_3pm/ep06.md`처럼 일반 마크다운/텍스트로 본문만 적어도 문단을 분석해 자동으로 장면 분할·프롬프트·장면 이미지·MP4 영상을 만듭니다. 웹페이지의 `새 회차 소설 원고 직접 쓰고 바로 변환하기` 칸에서도 바로 작성할 수 있습니다.
+- **새 회차 집필**: `novels/penthouse_ntr/ep04.md`처럼 일반 마크다운/텍스트로 본문만 적어도 문단을 분석해 자동으로 장면 분할·프롬프트·장면 이미지·MP4 영상을 만듭니다. 웹페이지의 `새 회차 소설 원고 직접 쓰고 바로 변환하기` 칸에서도 바로 작성할 수 있습니다.
 - **외부 AI 이미지·영상 결합**:
-  - `이미지_프롬프트.txt`로 생성한 이미지를 `novels/wall_3pm/bg/ep03_scene_02.png` 형태로 넣으면 자막과 비네팅을 입혀 합성합니다.
-  - `영상전환_프롬프트.txt`로 만든 AI I2V 클립을 `novels/wall_3pm/clips/ep03_scene_02.mp4`에 넣거나 `novels/wall_3pm/bgm.mp3`를 두면 최종 `영상.mp4` 렌더링에 자동 반영됩니다.
+  - `이미지_프롬프트.txt`로 생성한 이미지를 `novels/penthouse_ntr/bg/ep01_scene_02.png` 형태로 넣으면 자막과 비네팅을 입혀 합성합니다.
+  - `영상전환_프롬프트.txt`로 만든 AI I2V 클립을 `novels/penthouse_ntr/clips/ep01_scene_02.mp4`에 넣거나 `novels/penthouse_ntr/bgm.mp3`를 두면 최종 `영상.mp4` 렌더링에 자동 반영됩니다.
 
 ## 로컬 웹페이지
 

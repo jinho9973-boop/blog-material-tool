@@ -13,15 +13,16 @@ from content_tool.novel import (
 )
 
 ROOT = Path(__file__).resolve().parent.parent
-NOVEL_DIR = ROOT / "novels" / "wall_3pm"
+NOVEL_DIR = ROOT / "novels" / "penthouse_ntr"
 
 
-def test_wall_3pm_series_bible_and_episodes_load() -> None:
+def test_penthouse_ntr_series_bible_and_episodes_load() -> None:
     bible = load_series_bible(NOVEL_DIR)
-    assert bible.title == "벽 너머, 오후 세 시"
-    assert "서연" in bible.characters
-    assert "빅터" in bible.characters
-    for ep_num in range(1, 7):
+    assert bible.title == "스위트룸 3801호의 신부"
+    assert "유주" in bible.characters
+    assert "레이몬드" in bible.characters
+    assert "도윤" in bible.characters
+    for ep_num in range(1, 5):
         ep = load_episode(NOVEL_DIR / f"ep0{ep_num}.json", bible)
         assert ep.number == ep_num
         assert len(ep.paragraphs) >= 10
@@ -33,14 +34,14 @@ def test_novel_builds_images_prompts_srt_and_mp4(tmp_path: Path) -> None:
     files, results = build_novel_episodes(
         NOVEL_DIR,
         out_dir,
-        episode_numbers=[3],
+        episode_numbers=[1],
         aspect="9:16",
         render_video=True,
         fps=12,
     )
     assert results[0]["success"] is True
-    assert results[0]["title"] == "소나기가 벗겨 낸 윤곽"
-    ep_out = out_dir / "ep03"
+    assert results[0]["title"] == "얇은 결혼반지와 첫 번째 균열"
+    ep_out = out_dir / "ep01"
     assert (ep_out / "원고.md").is_file()
     assert (ep_out / "스토리보드.md").is_file()
     assert (ep_out / "자막.srt").is_file()
@@ -50,7 +51,7 @@ def test_novel_builds_images_prompts_srt_and_mp4(tmp_path: Path) -> None:
 
     img_prompts = (ep_out / "이미지_프롬프트.txt").read_text(encoding="utf-8")
     motion_prompts = (ep_out / "영상전환_프롬프트.txt").read_text(encoding="utf-8")
-    assert "35-year-old Korean married woman" in img_prompts
+    assert "29yo korean newlywed wife" in img_prompts
     assert "Image-to-Video" in motion_prompts
 
     with Image.open(ep_out / "scenes" / "scene_02.png") as scene_img:
@@ -66,28 +67,28 @@ def test_plain_markdown_episode_auto_splits_and_uses_custom_bg(tmp_path: Path) -
     )
     bg_dir = work_novel / "bg"
     bg_dir.mkdir()
-    Image.new("RGB", (600, 900), "#334E68").save(bg_dir / "ep06_scene_01.png", "PNG")
+    Image.new("RGB", (600, 900), "#334E68").save(bg_dir / "ep05_scene_01.png", "PNG")
 
     save_plain_episode(
         work_novel,
-        6,
-        "찻잔 너머로 스친 손끝",
+        5,
+        "닫힌 스위트룸과 자정의 부재중 전화",
         (
-            "수요일 오후 세 시, 베란다 블라인드 사이로 햇살이 길게 드리워졌다.\n\n"
-            "윤서연은 찻잔을 내려놓으며 강태주의 시선을 애써 피했다.\n\n"
-            "얇은 니트 너머로 가쁜 숨결이 스치자 거실 공기가 무겁게 가라앉았다."
+            "밤 열 시, 3801호 통유리창 밖으로 서울의 야경이 아찔하게 펼쳐졌다.\n\n"
+            "한유주의 가방 속에서 남편 도윤의 부재중 전화 알림이 소리 없이 깜빡였다.\n\n"
+            "레이몬드가 내뿜은 시가 연기가 그녀의 젖은 어깨선을 따라 느리게 내려앉았다."
         ),
     )
     out_dir = tmp_path / "out"
     _, results = build_novel_episodes(
         work_novel,
         out_dir,
-        episode_numbers=[6],
+        episode_numbers=[5],
         aspect="16:9",
         render_video=False,
     )
     assert results[0]["success"] is True
-    with Image.open(out_dir / "ep06" / "scenes" / "scene_01.png") as img:
+    with Image.open(out_dir / "ep05" / "scenes" / "scene_01.png") as img:
         assert img.size == (1920, 1080)
 
 
@@ -120,7 +121,7 @@ def test_cli_and_web_novel_workflow(capsys, tmp_path: Path) -> None:
         data={
             "action": "novel",
             "novel": str(NOVEL_DIR),
-            "episodes": "3",
+            "episodes": "1",
             "aspect": "9:16",
             "out": str(web_out),
         },
@@ -129,6 +130,6 @@ def test_cli_and_web_novel_workflow(capsys, tmp_path: Path) -> None:
     assert response.status_code == 200
     assert "이미지 프롬프트 복사하기".encode() in response.data
     assert "영상 전환 프롬프트 복사하기".encode() in response.data
-    mp4_resp = client.get("/media/ep03/영상.mp4")
+    mp4_resp = client.get("/media/ep01/영상.mp4")
     assert mp4_resp.status_code == 200
     assert mp4_resp.mimetype == "video/mp4"

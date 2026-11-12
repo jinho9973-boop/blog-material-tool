@@ -78,10 +78,10 @@ img,video{width:100%;border-radius:8px;background:#09131f}.ok{color:#087f5b}.fai
 <section><h2>③ 소설 → 이미지·영상 전환하기</h2><form method="post" action="/run">
 <input type="hidden" name="action" value="novel">
 <label>소설 원고 폴더</label>
-<input class="text" name="novel" value="novels/wall_3pm" required>
-<small>기본값 ‘novels/wall_3pm’에 장편 《벽 너머, 오후 세 시》 설정집과 1~5화가 들어 있습니다. AI 생성 이미지를 넣으려면 이 폴더 아래 bg/ep03_scene_02.png 형태로 넣으세요.</small>
+<input class="text" name="novel" value="novels/penthouse_ntr" required>
+<small>기본값 ‘novels/penthouse_ntr’에 정통 NTR 《스위트룸 3801호의 신부》 설정집과 1~3화가 들어 있습니다. 로컬 AI 생성 이미지를 넣으려면 bg/ep01_scene_02.png 형태로 넣으세요.</small>
 <label>변환할 회차 번호 (비워 두면 전체 회차)</label>
-<input class="text" name="episodes" value="3" placeholder="예: 1,2,3 또는 공란(전체)">
+<input class="text" name="episodes" value="1" placeholder="예: 1,2,3 또는 공란(전체)">
 <label>화면 비율</label>
 <select name="aspect" autocomplete="off">
 <option value="9:16" selected>9:16 세로 (쇼츠·릴스·틱톡)</option>
@@ -97,9 +97,9 @@ img,video{width:100%;border-radius:8px;background:#09131f}.ok{color:#087f5b}.fai
 <form method="post" action="/run">
 <input type="hidden" name="action" value="novel_write">
 <label>소설 폴더</label>
-<input class="text" name="novel" value="novels/wall_3pm" required>
+<input class="text" name="novel" value="novels/penthouse_ntr" required>
 <label>회차 번호</label>
-<input class="text" name="episode_number" type="number" min="1" value="6" required>
+<input class="text" name="episode_number" type="number" min="1" value="4" required>
 <label>회차 제목</label>
 <input class="text" name="episode_title" placeholder="예: 찻잔 너머로 스친 손끝" required>
 <label>소설 본문 (문단 사이는 빈 줄로 구분하면 자동으로 장면을 나눕니다)</label>
