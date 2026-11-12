@@ -11,6 +11,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+from content_tool.novel import build_novel_episodes
 from content_tool.pipeline import build_blogs
 from content_tool.youtube import (
     DEFAULT_CHANNELS,
@@ -38,8 +39,24 @@ def parser() -> argparse.ArgumentParser:
         "--compose", "--그림다시", dest="compose", type=Path,
         help="글은 그대로 두고 그림만 다시 만듭니다",
     )
+    modes.add_argument(
+        "--novel", "--소설", dest="novel", type=Path,
+        help="소설 원고를 장면 이미지·프롬프트·MP4 영상으로 변환할 폴더",
+    )
     command.add_argument(
         "--out", "--저장폴더", dest="out", type=Path, help="완성 파일을 넣을 폴더"
+    )
+    command.add_argument(
+        "--episodes", "--회차", dest="episodes", default="",
+        help="변환할 소설 회차 번호(쉼표로 나눔, 비워 두면 전체 회차)",
+    )
+    command.add_argument(
+        "--aspect", "--비율", dest="aspect", default="9:16",
+        help="소설 이미지·영상 화면 비율(9:16, 16:9, 1:1)",
+    )
+    command.add_argument(
+        "--no-video", "--영상생략", dest="no_video", action="store_true",
+        help="MP4 렌더링을 생략하고 원고·프롬프트·장면 이미지만 만듭니다",
     )
     command.add_argument(
         "--blogs", "--블로그", dest="blogs", default="1,2",
@@ -98,6 +115,22 @@ def _korean_blog_results(results: list[dict[str, object]]) -> list[dict[str, obj
     return translated
 
 
+def _korean_novel_results(results: list[dict[str, object]]) -> list[dict[str, object]]:
+    translated: list[dict[str, object]] = []
+    for item in results:
+        value: dict[str, object] = {"회차": item["episode"], "성공": item["success"]}
+        if item["success"]:
+            value["제목"] = item["title"]
+            value["장면수"] = item["scene_count"]
+            if item.get("video"):
+                value["영상파일"] = item["video"]
+            value["파일목록"] = item["files"]
+        else:
+            value["실패이유"] = item["reason"]
+        translated.append(value)
+    return translated
+
+
 def main(argv: list[str] | None = None) -> int:
     load_dotenv()
     args = parser().parse_args(argv)
@@ -119,6 +152,27 @@ def main(argv: list[str] | None = None) -> int:
             if not args.sample_youtube:
                 files.insert(0, args.out / "channels.json")
             output = _result(True, files, 수집개수=len(issues))
+        elif args.novel is not None:
+            output_dir = args.out or args.novel / "결과"
+            episode_numbers = None
+            if args.episodes.strip():
+                try:
+                    episode_numbers = [int(item) for item in _csv(args.episodes)]
+                except ValueError as exc:
+                    raise ValueError("--episodes는 쉼표로 구분한 숫자여야 합니다.") from exc
+            files, novel_results = build_novel_episodes(
+                args.novel,
+                output_dir,
+                episode_numbers=episode_numbers,
+                aspect=args.aspect,
+                render_video=not args.no_video,
+            )
+            success = all(bool(item["success"]) for item in novel_results)
+            output = _result(
+                success,
+                files,
+                회차결과=_korean_novel_results(novel_results),
+            )
         else:
             material_dir = args.material or args.compose
             assert material_dir is not None
